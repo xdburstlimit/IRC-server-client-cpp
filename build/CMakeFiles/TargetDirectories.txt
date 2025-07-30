@@ -1,0 +1,8 @@
+/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build/CMakeFiles/edit_cache.dir
+/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build/CMakeFiles/rebuild_cache.dir
+/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build/server/CMakeFiles/chat_server.dir
+/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build/server/CMakeFiles/edit_cache.dir
+/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build/server/CMakeFiles/rebuild_cache.dir
+/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build/client/CMakeFiles/chat_client.dir
+/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build/client/CMakeFiles/edit_cache.dir
+/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build/client/CMakeFiles/rebuild_cache.dir

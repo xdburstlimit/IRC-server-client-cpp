@@ -1,0 +1,26 @@
+[
+{
+  "directory": "/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build/server",
+  "command": "/usr/bin/c++   -g -o CMakeFiles/chat_server.dir/main.cpp.o -c /mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/server/main.cpp",
+  "file": "/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/server/main.cpp",
+  "output": "server/CMakeFiles/chat_server.dir/main.cpp.o"
+},
+{
+  "directory": "/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build/server",
+  "command": "/usr/bin/c++   -g -o CMakeFiles/chat_server.dir/server.cpp.o -c /mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/server/server.cpp",
+  "file": "/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/server/server.cpp",
+  "output": "server/CMakeFiles/chat_server.dir/server.cpp.o"
+},
+{
+  "directory": "/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build/client",
+  "command": "/usr/bin/c++   -g -o CMakeFiles/chat_client.dir/main.cpp.o -c /mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/client/main.cpp",
+  "file": "/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/client/main.cpp",
+  "output": "client/CMakeFiles/chat_client.dir/main.cpp.o"
+},
+{
+  "directory": "/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build/client",
+  "command": "/usr/bin/c++   -g -o CMakeFiles/chat_client.dir/client.cpp.o -c /mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/client/client.cpp",
+  "file": "/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/client/client.cpp",
+  "output": "client/CMakeFiles/chat_client.dir/client.cpp.o"
+}
+]

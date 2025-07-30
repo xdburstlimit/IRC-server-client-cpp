@@ -1,0 +1,26 @@
+TODO:
+
+*GUI.
+
+Optional(probably not gonna happen lol):
+*Add encrpytion and some other things for safety idk.
+*clean up code.
+*more error checking
+
+DONE:
+*make it so you can close the server
+ 
+* Multithread the server
+    -Use one thread for the polling.
+    -Use one for sending a message to the clients from the server.
+    -use mutexes to avoid potential race conditions(pretty unlikely it would happen)
+*Study the server setup again. Make notes about it. Line for line. It will help.
+
+*Make it possible to receive client name(copy how the guy did it for the pfds).
+    -modify handle_new_connection() function input DONE
+    -modify handle_client_data() function input DONE
+    -modify add_pfds() function DONE
+    -modify del_from_pfds() function DONE
+
+DECIDED AGAINST:
+*Use std::vector to store file descriptors. 

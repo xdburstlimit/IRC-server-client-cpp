@@ -1,0 +1,13 @@
+TODO:
+*GUI.
+
+Optional:
+*clean up code
+
+*more error checking
+
+DONE:
+*handle server being closed abruptly
+*multi thread the client
+*send client name to server.
+*copy the code from the server using the eventfd if the client closes by choice
