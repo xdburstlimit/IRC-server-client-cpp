@@ -230,15 +230,6 @@ CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Value Computed by CMake
-Client/Server_BINARY_DIR:STATIC=/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build
-
-//Value Computed by CMake
-Client/Server_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-Client/Server_SOURCE_DIR:STATIC=/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project
-
-//Value Computed by CMake
 IRC_BINARY_DIR:STATIC=/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build
 
 //Value Computed by CMake

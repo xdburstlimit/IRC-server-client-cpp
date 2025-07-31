@@ -1206,42 +1206,6 @@
 			"value" : "FALSE"
 		},
 		{
-			"name" : "Client/Server_BINARY_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build"
-		},
-		{
-			"name" : "Client/Server_IS_TOP_LEVEL",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "ON"
-		},
-		{
-			"name" : "Client/Server_SOURCE_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project"
-		},
-		{
 			"name" : "IRC_BINARY_DIR",
 			"properties" : 
 			[

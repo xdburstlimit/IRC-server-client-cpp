@@ -1,6 +1,6 @@
 #include "./server.h"
 
-int get_listener_socket(){
+int get_listener_socket(){ 
     int listener;	 // Listening socket descriptor
 	int yes=1;		// For setsockopt() SO_REUSEADDR, below
 	int rv;
@@ -53,7 +53,7 @@ int get_listener_socket(){
 }
 
 void process_connections(int listener, int exitfd, int *fd_count, int *fd_size,
-		pollfd **pfds, char*** usernames, pthread_mutex_t* mutex){
+		pollfd **pfds, char*** usernames, pthread_mutex_t* mutex){ 
     for(int i = 0; i < *fd_count; i++) {
 		// Check if someone's ready to read
 		if ((*pfds)[i].revents & (POLLIN | POLLHUP)) {
@@ -66,7 +66,7 @@ void process_connections(int listener, int exitfd, int *fd_count, int *fd_size,
 			} else {
 				// Otherwise we're just a regular client
 				pthread_mutex_lock(mutex);
-				handle_client_data(listener, exitfd,fd_count, *pfds, *usernames, &i);
+				handle_client_data(listener, exitfd,fd_count, *pfds, usernames, &i);
 				pthread_mutex_unlock(mutex);
 			}
 		}
@@ -74,8 +74,7 @@ void process_connections(int listener, int exitfd, int *fd_count, int *fd_size,
 }
 
 void handle_new_connection(int listener, int *fd_count,
-		int *fd_size,  pollfd** pfds, char*** usernames)
-{
+		int *fd_size,  pollfd** pfds, char*** usernames) {
 	sockaddr_storage remoteaddr; // Client address
 	socklen_t addrlen;
 	int newfd;  // Newly accept()ed socket descriptor
@@ -97,7 +96,6 @@ void handle_new_connection(int listener, int *fd_count,
 
 void add_to_pfds(pollfd **pfds, char*** usernames,int newfd, int *fd_count,
 		int *fd_size){
-	//add recv here for username
     if(*fd_count == *fd_size){
 		std::cout << "inside realloc\n";
         *fd_size *= 2; 
@@ -127,8 +125,7 @@ void add_to_pfds(pollfd **pfds, char*** usernames,int newfd, int *fd_count,
 	(*fd_count)++;
 }
 
-const char *inet_ntop2(void *addr, char *buf, size_t size)
-{
+const char *inet_ntop2(void *addr, char *buf, size_t size){
 	sockaddr_storage *sas = (sockaddr_storage *) addr;
 	sockaddr_in *sa4;
 	void *src;
@@ -146,8 +143,7 @@ const char *inet_ntop2(void *addr, char *buf, size_t size)
 }
 
 void handle_client_data(int listener, int exitfd, int *fd_count,
-		 pollfd *pfds, char** usernames, int *pfd_i)
-{
+		 pollfd *pfds, char*** usernames, int *pfd_i){
 	char buf[256];	// Buffer for client data
 	memset(buf,0, sizeof(buf));
 	int nbytes = recv(pfds[*pfd_i].fd, buf, sizeof buf, 0);
@@ -177,7 +173,7 @@ void handle_client_data(int listener, int exitfd, int *fd_count,
 		char combined[250];
 		memset(combined, 0, sizeof(combined));
 		char semi_colon[3] = ": ";
-		strcat(combined,usernames[*pfd_i]);
+		strcat(combined,(*usernames)[*pfd_i]);
 		strcat(combined,semi_colon);
 		strcat(combined, buf);
 		int length = sizeof(combined);
@@ -193,18 +189,17 @@ void handle_client_data(int listener, int exitfd, int *fd_count,
 	}
 }
 
-void del_from_pfds( pollfd pfds[], char** usernames, int i, int *fd_count)
-{
+void del_from_pfds( pollfd pfds[], char*** usernames, int i, int *fd_count){
 	// Copy the one from the end over this one
 	pfds[i] = pfds[*fd_count-1];
 	//free should be added here(triple pointer should be added then)
-	usernames[i] = usernames[*fd_count-1];
+	free((*usernames)[i]);
+	(*usernames)[i] = (*usernames)[*fd_count-1];
 
 	(*fd_count)--;
 }
 
-void* poller(void* args)
-{
+void* poller(void* args){
 	server_data* sdata = (server_data*) args; 
     while(1){
 		int poll_count = poll(sdata->fds, *(sdata->fd_count), -1);
@@ -237,7 +232,7 @@ void* broadcast_to_clients(void* args){
 		if(msg_cpp == "/exit"){
 			server_running = 0;
 			u_int64_t val = 1;//eventfd can accept <=8bytes
-			if(write(clients->exit_fd, &val, sizeof(val))==-1) perror("write");
+			if(write(*(clients->exit_fd), &val, sizeof(val))==-1) perror("write");
 			std::cout << "wrote to exit_fd\n";
 			break;
 		}
@@ -257,7 +252,7 @@ void* broadcast_to_clients(void* args){
 			for(int j = 0; j < *(clients->fd_count); j++) {
 				int dest_fd = clients->fds[j].fd;
 				// Except the listener
-				if (dest_fd != *(clients->listener) && dest_fd != clients->exit_fd){
+				if (dest_fd != *(clients->listener) && dest_fd != *(clients->exit_fd)){
 					if (send(dest_fd, combined, length, 0) == -1) {
 						perror("send");
 					}
@@ -337,7 +332,7 @@ void start(){
 
     //broadcasting data
     broadcast_data b_clients;
-    b_clients.exit_fd = exit_event;
+    b_clients.exit_fd = &exit_event;
     b_clients.fd_count = &fd_count;
     b_clients.fds = pfds;
     b_clients.listener = &listener;

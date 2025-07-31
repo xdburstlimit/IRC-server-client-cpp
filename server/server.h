@@ -38,9 +38,9 @@ void add_to_pfds(pollfd **pfds, char*** usernames, int newfd, int *fd_count,
 const char *inet_ntop2(void *addr, char *buf, size_t size);
 
 void handle_client_data(int listener, int exitfd,int *fd_count,
-		pollfd *pfds, char** usernames, int *pfd_i);
+		pollfd *pfds, char*** usernames, int *pfd_i);
 
-void del_from_pfds( pollfd pfds[], char** usernames, int i, int *fd_count);
+void del_from_pfds( pollfd pfds[], char*** usernames, int i, int *fd_count);
 
 void* broadcast_to_clients(void* args);
 
@@ -60,7 +60,7 @@ struct server_data{
 
 struct broadcast_data{
 	pollfd* fds;
-	int exit_fd;
+	int* exit_fd;
 	int* fd_count;
 	int* listener;
 	pthread_mutex_t* mutex;
