@@ -65,6 +65,26 @@ CMAKE_BINARY_DIR = /mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target package
+package: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Run CPack packaging tool..."
+	/usr/bin/cpack --config ./CPackConfig.cmake
+.PHONY : package
+
+# Special rule for the target package
+package/fast: package
+.PHONY : package/fast
+
+# Special rule for the target package_source
+package_source:
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Run CPack packaging tool for source..."
+	/usr/bin/cpack --config ./CPackSourceConfig.cmake /mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build/CPackSourceConfig.cmake
+.PHONY : package_source
+
+# Special rule for the target package_source
+package_source/fast: package_source
+.PHONY : package_source/fast
+
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "No interactive CMake dialog available..."
@@ -126,7 +146,7 @@ chat_server: cmake_check_build_system
 
 # fast build rule for target.
 chat_server/fast:
-	$(MAKE) $(MAKESILENT) -f server/CMakeFiles/chat_server.dir/build.make server/CMakeFiles/chat_server.dir/build
+	$(MAKE) $(MAKESILENT) -f src/server/CMakeFiles/chat_server.dir/build.make src/server/CMakeFiles/chat_server.dir/build
 .PHONY : chat_server/fast
 
 #=============================================================================
@@ -139,7 +159,7 @@ chat_client: cmake_check_build_system
 
 # fast build rule for target.
 chat_client/fast:
-	$(MAKE) $(MAKESILENT) -f client/CMakeFiles/chat_client.dir/build.make client/CMakeFiles/chat_client.dir/build
+	$(MAKE) $(MAKESILENT) -f src/client/CMakeFiles/chat_client.dir/build.make src/client/CMakeFiles/chat_client.dir/build
 .PHONY : chat_client/fast
 
 # Help Target
@@ -149,6 +169,8 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... package"
+	@echo "... package_source"
 	@echo "... rebuild_cache"
 	@echo "... chat_client"
 	@echo "... chat_server"

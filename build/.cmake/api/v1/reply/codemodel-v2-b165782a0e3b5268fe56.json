@@ -1,0 +1,101 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10.0"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "src/server",
+					"jsonFile" : "directory-src.server-Debug-ed01e06ea8a73e000890.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src/server",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "src/client",
+					"jsonFile" : "directory-src.client-Debug-1c4a3b19c39f3daa3331.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src/client",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2
+					],
+					"name" : "IRC",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 2,
+					"id" : "chat_client::@8ca63c80a879d0067daa",
+					"jsonFile" : "target-chat_client-Debug-f9e53dc1d5c8930ef3e1.json",
+					"name" : "chat_client",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "chat_server::@2804e40980a64c7d7ad1",
+					"jsonFile" : "target-chat_server-Debug-4cc6360a0dd7054438aa.json",
+					"name" : "chat_server",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build",
+		"source" : "/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

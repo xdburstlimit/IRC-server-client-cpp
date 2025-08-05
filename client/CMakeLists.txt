@@ -1,1 +1,0 @@
-add_executable(chat_client main.cpp client.cpp)

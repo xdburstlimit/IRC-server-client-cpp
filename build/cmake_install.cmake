@@ -44,8 +44,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build/server/cmake_install.cmake")
-  include("/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build/client/cmake_install.cmake")
+  include("/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build/src/server/cmake_install.cmake")
+  include("/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build/src/client/cmake_install.cmake")
 
 endif()
 
