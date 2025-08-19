@@ -190,7 +190,11 @@ src/client/CMakeFiles/chat_client.dir/main.cpp.o: \
  /usr/include/c++/13/bits/locale_facets.tcc \
  /usr/include/c++/13/bits/basic_ios.tcc \
  /usr/include/c++/13/bits/ostream.tcc /usr/include/c++/13/istream \
- /usr/include/c++/13/bits/istream.tcc \
+ /usr/include/c++/13/bits/istream.tcc /usr/include/c++/13/vector \
+ /usr/include/c++/13/bits/stl_uninitialized.h \
+ /usr/include/c++/13/bits/stl_vector.h \
+ /usr/include/c++/13/bits/stl_bvector.h \
+ /usr/include/c++/13/bits/vector.tcc \
  /mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/thirdparty/imgui/imgui.h \
  /mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/thirdparty/imgui/imconfig.h \
  /mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/thirdparty/imgui/imconfig-SFML.h \
@@ -243,11 +247,8 @@ src/client/CMakeFiles/chat_client.dir/main.cpp.o: \
  /usr/include/SFML/Window/Cursor.hpp /usr/include/SFML/Window/Event.hpp \
  /usr/include/SFML/Window/Keyboard.hpp /usr/include/SFML/Window/Mouse.hpp \
  /usr/include/SFML/Window/Sensor.hpp /usr/include/SFML/Window/Touch.hpp \
- /usr/include/SFML/Window/VideoMode.hpp /usr/include/c++/13/vector \
- /usr/include/c++/13/bits/stl_uninitialized.h \
- /usr/include/c++/13/bits/stl_vector.h \
- /usr/include/c++/13/bits/stl_bvector.h \
- /usr/include/c++/13/bits/vector.tcc /usr/include/SFML/Window/Window.hpp \
+ /usr/include/SFML/Window/VideoMode.hpp \
+ /usr/include/SFML/Window/Window.hpp \
  /usr/include/SFML/Window/WindowBase.hpp \
  /usr/include/SFML/Window/Vulkan.hpp \
  /usr/include/SFML/Window/WindowHandle.hpp \

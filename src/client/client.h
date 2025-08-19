@@ -15,6 +15,8 @@
 #include <iostream>
 #include <pthread.h>
 
+#include <vector>
+
 #define PORT "3490"
 
 int get_server_socket();
@@ -23,11 +25,15 @@ extern int server_running;
 
 extern int client_running;
 
-extern int thread_count;
+extern int msg_i;
+
+extern std::string display_messages;
+
+extern std::string users_connected;
 
 void *get_in_addr(struct sockaddr *sa);
 
-void* send_data(void *info);
+void send_data(char msg[],int socket_fd);
 
 void* recv_data(void *info);
 
@@ -37,6 +43,7 @@ struct recv_args{
     int socket_fd;
     pollfd pfds[2];
     int fd_count;
+    std::vector <std::string>* chat_history;
 };
 
 struct send_args{

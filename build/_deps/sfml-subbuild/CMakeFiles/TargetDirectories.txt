@@ -1,3 +1,0 @@
-/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build/_deps/sfml-subbuild/CMakeFiles/sfml-populate.dir
-/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build/_deps/sfml-subbuild/CMakeFiles/edit_cache.dir
-/mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/build/_deps/sfml-subbuild/CMakeFiles/rebuild_cache.dir

@@ -53,7 +53,7 @@ int get_listener_socket(){
 }
 
 void process_connections(int listener, int exitfd, int *fd_count, int *fd_size,
-		pollfd **pfds, char*** usernames, pthread_mutex_t* mutex){ 
+		pollfd **pfds, char*** usernames, pthread_mutex_t* mutex, std::vector <std::string>* chat_history){ 
     for(int i = 0; i < *fd_count; i++) {
 		// Check if someone's ready to read
 		if ((*pfds)[i].revents & (POLLIN | POLLHUP)) {
@@ -66,7 +66,7 @@ void process_connections(int listener, int exitfd, int *fd_count, int *fd_size,
 			} else {
 				// Otherwise we're just a regular client
 				pthread_mutex_lock(mutex);
-				handle_client_data(listener, exitfd,fd_count, *pfds, usernames, &i);
+				handle_client_data(listener, exitfd,fd_count, *pfds, usernames, &i, chat_history);
 				pthread_mutex_unlock(mutex);
 			}
 		}
@@ -88,9 +88,6 @@ void handle_new_connection(int listener, int *fd_count,
 		perror("accept");
 	} else {
 		add_to_pfds(pfds, usernames,newfd, fd_count, fd_size);
-		printf("pollserver: new connection from %s on socket %d\n",
-				inet_ntop2(&remoteaddr, remoteIP, sizeof remoteIP),
-				newfd);
 	}
 }
 
@@ -118,32 +115,20 @@ void add_to_pfds(pollfd **pfds, char*** usernames,int newfd, int *fd_count,
 	memset(buf,0,sizeof(buf));
 	int nbytes = recv(newfd, buf, sizeof buf, 0);
 	(*usernames)[*fd_count] = (char*) malloc(strlen(buf) + 1);
-	
 	if ((*usernames)[*fd_count]) {
 		strcpy((*usernames)[*fd_count], buf);
 	}
+	std::string new_user((*usernames)[*fd_count]);
+	users_connected += (new_user + '\n');
+	//need to add another send here to send new client list to all clients
 	(*fd_count)++;
+	send_user_list(users_connected,*pfds,*fd_count);
+
 }
 
-const char *inet_ntop2(void *addr, char *buf, size_t size){
-	sockaddr_storage *sas = (sockaddr_storage *) addr;
-	sockaddr_in *sa4;
-	void *src;
-
-	switch (sas->ss_family) {
-		case AF_INET:
-			sa4 = (sockaddr_in *) addr;
-			src = &(sa4->sin_addr);
-			break;
-		default:
-			return NULL;
-	}
-
-	return inet_ntop(sas->ss_family, src, buf, size);
-}
 
 void handle_client_data(int listener, int exitfd, int *fd_count,
-		 pollfd *pfds, char*** usernames, int *pfd_i){
+		 pollfd *pfds, char*** usernames, int *pfd_i, std::vector <std::string>* chat_history){
 	char buf[256];	// Buffer for client data
 	memset(buf,0, sizeof(buf));
 	int nbytes = recv(pfds[*pfd_i].fd, buf, sizeof buf, 0);
@@ -170,15 +155,22 @@ void handle_client_data(int listener, int exitfd, int *fd_count,
 				nbytes, buf);
 		// Send to everyone!
 		std::cout << "sending to everyone!\n";
-		char combined[250];
+		char combined[256];
 		memset(combined, 0, sizeof(combined));
 		char semi_colon[3] = ": ";
 		strcat(combined,(*usernames)[*pfd_i]);
 		strcat(combined,semi_colon);
 		strcat(combined, buf);
 		int length = sizeof(combined);
+		std::string store_msg = combined;
+		(*(chat_history)).push_back(store_msg);
+		std::vector<std::string>& vecRef = *chat_history; 						
+		std::string a = vecRef[msg_i];	
+		display_messages += (a + '\n'); 
+        ++msg_i;
 		for(int j = 0; j < *fd_count; j++) {
 			int dest_fd = pfds[j].fd;
+			std::cout << "dest_fd: " << dest_fd << '\n';
 			// Except the listener and ourselves
 			if (dest_fd != listener && dest_fd != sender_fd && dest_fd != exitfd) {
 				if (send(dest_fd, combined, length, 0) == -1) {
@@ -197,12 +189,20 @@ void del_from_pfds( pollfd pfds[], char*** usernames, int i, int *fd_count){
 	(*usernames)[i] = (*usernames)[*fd_count-1];
 
 	(*fd_count)--;
+	users_connected = "";
+	for(int i{2}; i < (*fd_count); ++i){
+		std::string new_user((*usernames)[i]);
+		users_connected += (new_user + '\n');
+	}
+	//need to add another send here to send new client list to all clients
+	send_user_list(users_connected,pfds,*fd_count);
+
 }
 
 void* poller(void* args){
 	server_data* sdata = (server_data*) args; 
     while(1){
-		int poll_count = poll(sdata->fds, *(sdata->fd_count), -1);
+		int poll_count = poll(*(sdata->fds), *(sdata->fd_count), -1);
 		
         if (poll_count == -1) {
 			perror("poll");
@@ -211,62 +211,63 @@ void* poller(void* args){
 		if(server_running == 0){
 			break;
 		}
-        process_connections(*(sdata->listener), *(sdata->exit_fd),(sdata->fd_count), (sdata->fd_size), &(sdata->fds), sdata->usernames ,sdata->mutex);
+        process_connections(*(sdata->listener), *(sdata->exit_fd),(sdata->fd_count), (sdata->fd_size), sdata->fds, sdata->usernames ,sdata->mutex,sdata->chat_history);
     }
     //close fds & usernames
 	for(int i{}; i < *(sdata->fd_count); ++i){
-		close(sdata->fds[i].fd);
-		free(sdata->usernames[0][i]);
+		close(sdata->fds[i]->fd);
+		free((*(sdata->usernames))[i]);
 	}
-	free(sdata->fds);
+	free(*(sdata->fds));
 	free(*(sdata->usernames));
 	return nullptr;
 }
 
-void* broadcast_to_clients(void* args){
-	broadcast_data* clients = (broadcast_data*) args;
-	while(1){
-		int len, bytes_sent;
-		std::string msg_cpp;
-		getline(std::cin, msg_cpp);
-		if(msg_cpp == "/exit"){
-			server_running = 0;
-			u_int64_t val = 1;//eventfd can accept <=8bytes
-			if(write(*(clients->exit_fd), &val, sizeof(val))==-1) perror("write");
-			std::cout << "wrote to exit_fd\n";
-			break;
-		}
-		const char *msg = msg_cpp.c_str();
-		len = strlen(msg);
-		if(len <= 0){
-			perror("send");
-		}else{
-			pthread_mutex_lock(clients->mutex);
-			std::cout << '\n';
-			std::cout << "sending to everyone\n";
-			char combined[250];
-			memset(combined, 0, sizeof(combined));
-			strcat(combined,"SERVER: ");
-			strcat(combined, msg);
-			int length = sizeof(combined);
-			for(int j = 0; j < *(clients->fd_count); j++) {
-				int dest_fd = clients->fds[j].fd;
-				// Except the listener
-				if (dest_fd != *(clients->listener) && dest_fd != *(clients->exit_fd)){
-					if (send(dest_fd, combined, length, 0) == -1) {
-						perror("send");
-					}
+void broadcast_to_clients(broadcast_data* clients,pollfd* pfds,char* msg){
+	int len, bytes_sent;
+	len = strlen(msg);
+	if(len <= 0){
+		perror("send");
+	}else{
+		pthread_mutex_lock(clients->mutex);
+		std::cout << '\n';
+		std::cout << "sending to everyone\n";
+		char combined[250];
+		memset(combined, 0, sizeof(combined));
+		strcat(combined,"SERVER: ");
+		strcat(combined, msg);
+		std::string store_msg = combined;
+		(*(clients->chat_history)).push_back(store_msg);
+		int length = sizeof(combined);
+		for(int j = 0; j < *(clients->fd_count); j++) {
+			int dest_fd = pfds[j].fd;
+			std::cout << "dest_fd: " << dest_fd << '\n';
+			// Except the listener
+			if (dest_fd != *(clients->listener) && dest_fd != *(clients->exit_fd)){
+				if (send(dest_fd, combined, length, 0) == -1) {
+					perror("send");
 				}
 			}
-			pthread_mutex_unlock(clients->mutex);
 		}
+		pthread_mutex_unlock(clients->mutex);
 	}
-	return nullptr;
+	return;
 
 }
 
 void start(){
+	sf::RenderWindow w_imgui(sf::VideoMode(745, 715), "Server",sf::Style::Titlebar|sf::Style::Close);
+	ImGui::SFML::Init(w_imgui);
+	sf::Clock deltaClock;
 	int listener;
+
+    float size_pixels = 18;
+    ImGuiIO& io = ImGui::GetIO();
+    io.Fonts->Clear();
+    ImFont* font = io.Fonts->AddFontFromFileTTF("../../../res/server/font.ttf", size_pixels, NULL, io.Fonts->GetGlyphRangesDefault());
+    io.FontDefault = font;
+    ImGui::SFML::UpdateFontTexture();
+
     //storing connections in a vector
 	int fd_size = 5;
 	int fd_count = 0;
@@ -320,39 +321,113 @@ void start(){
     pthread_mutex_t mutex;
     pthread_mutex_init(&mutex, nullptr);
 
+    std::vector<std::string> chat_history;
+
+
     //polling data
     server_data s_data;
     s_data.exit_fd = &exit_event;
     s_data.fd_size = &fd_size;
     s_data.fd_count = &fd_count;
-    s_data.fds = pfds;
+    s_data.fds = &pfds;
     s_data.listener = &listener;
     s_data.mutex = &mutex;
     s_data.usernames = &usernames;
+    s_data.chat_history = &chat_history;
 
     //broadcasting data
     broadcast_data b_clients;
     b_clients.exit_fd = &exit_event;
     b_clients.fd_count = &fd_count;
-    b_clients.fds = pfds;
     b_clients.listener = &listener;
     b_clients.mutex = &mutex;
+    b_clients.chat_history = &chat_history;
 
 
     //threading starts here
     pthread_t* thread_handles;
-    thread_handles = (pthread_t*) malloc(thread_count*sizeof(pthread_t));
+    thread_handles = (pthread_t*) malloc(sizeof(pthread_t));
     puts("pollserver: waiting for connections...");
-
-    pthread_create(&thread_handles[0], nullptr,
+    pthread_create(thread_handles, nullptr,
             poller, &s_data);
-    pthread_create(&thread_handles[1], nullptr,
-            broadcast_to_clients, &b_clients);
 
-    pthread_join(thread_handles[0], nullptr);
-    pthread_join(thread_handles[1], nullptr);
+
+    char msg[256] = "";
+	while(w_imgui.isOpen()){
+		sf::Event event;
+		while(w_imgui.pollEvent(event)){
+			ImGui::SFML::ProcessEvent(event);
+			if(event.type == sf::Event::Closed){
+				server_running = 0;
+				u_int64_t val = 1;//eventfd can accept <=8bytes
+				if(write(*(b_clients.exit_fd), &val, sizeof(val))==-1) perror("write");
+                w_imgui.close();
+				break;
+			}
+		}
+		ImGui::SFML::Update(w_imgui, deltaClock.restart());
+        
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+
+        ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(0xee, 0xe8, 0xd6, 0xff));
+        ImGui::SetNextWindowPos(ImVec2(0,0));
+        ImGui::Begin("chat lobby",NULL,ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoTitleBar);
+        ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[0]);
+        ImGui::InputTextMultiline(" ",(char*) display_messages.c_str(),sizeof(display_messages),ImVec2(575,675),ImGuiInputTextFlags_ReadOnly);
+		ImGui::PopFont();
+        ImGui::End();
     
-    
+        ImGui::SetNextWindowPos(ImVec2(580,0));
+        ImGui::Begin("users", NULL ,ImGuiWindowFlags_NoTitleBar);
+        ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[0]);
+        ImGui::InputTextMultiline(" ",(char*) users_connected.c_str(),sizeof(users_connected),ImVec2(150,675),ImGuiInputTextFlags_ReadOnly);
+		ImGui::PopFont();
+        ImGui::End();
+
+        ImGui::SetNextWindowPos(ImVec2(0,675));
+		ImGui::SetNextWindowSize(ImVec2(880,0));
+		ImGui::Begin(" ",NULL,ImGuiWindowFlags_NoTitleBar|ImGuiWindowFlags_NoResize);
+        ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[0]);
+        ImGui::SetWindowFocus(" ");
+        ImGui::InputText("", msg, IM_ARRAYSIZE(msg));
+        ImGui::SameLine();
+        if((ImGui::IsKeyPressed(ImGui::GetIO().KeyMap[ImGuiKey_Enter], false) &&ImGui::IsWindowFocused() || 
+            ImGui::Button("Send", ImVec2(150,0))) && strlen(msg) > 0){
+            broadcast_to_clients(&b_clients, pfds,msg);
+            memset(msg,0 ,IM_ARRAYSIZE(msg));
+            display_messages += (chat_history[msg_i] + '\n');
+            ++msg_i;
+        }
+        ImGui::PopFont();
+		ImGui::End();
+        ImGui::PopStyleVar();
+        ImGui::PopStyleColor();
+
+
+
+		w_imgui.clear();
+		ImGui::SFML::Render(w_imgui);
+        w_imgui.display();
+	}
+    pthread_join(*thread_handles, nullptr);
     std::cout << "massive day for the unemployed\n";
 }
+
+void send_user_list(std::string display_users, pollfd* pfds, int fd_count){
+	std::cout << display_users << '\n';
+	char combined[256];
+	memset(combined,0,sizeof(combined));
+	strcat(combined,"/");
+	strcat(combined,display_users.c_str());
+	int n = strlen(combined);
+	for(int j = 2; j < fd_count; j++) {
+		int dest_fd = pfds[j].fd;
+		// Except the listener
+		if (send(dest_fd, combined, n, 0) == -1) {
+			perror("send");
+		}
+		
+	}
+}
+
 
