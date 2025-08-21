@@ -21,7 +21,6 @@
 #include "imgui.h"
 #include "imgui-SFML.h"
 #include "SFML/Graphics.hpp"
-#include "SFML/Window/Keyboard.hpp"
 
 #include <vector>
 
@@ -56,6 +55,8 @@ extern std::string display_messages;
 
 extern std::string users_connected;
 
+extern int fd_start;
+
 
 int get_listener_socket();
 
@@ -69,15 +70,21 @@ void add_to_pfds(pollfd **pfds, char*** usernames, int newfd, int *fd_count,
 		int *fd_size);
 
 void handle_client_data(int listener, int exitfd,int *fd_count,
-		pollfd *pfds, char*** usernames, int *pfd_i, std::vector <std::string>* chat_history);
+		pollfd **pfds, char*** usernames, int *pfd_i, std::vector <std::string>* chat_history);
 
-void del_from_pfds( pollfd pfds[], char*** usernames, int i, int *fd_count);
+void del_from_pfds( pollfd** pfds, char*** usernames, int i, int *fd_count);
 
 void broadcast_to_clients(broadcast_data* clients, pollfd* pfds,char* msg);
 
 void* poller(void* args);
 
-void send_user_list(std::string display_users, pollfd* pfds, int fd_count);
+void send_user_list(std::string display_users, pollfd** pfds, int fd_count);
+
+void chat_window();
+
+void user_window();
+
+void msg_window(char* msg, int msg_size, broadcast_data b_clients, std::vector<std::string> chat_history, pollfd* pfds);
 
 void start();
 

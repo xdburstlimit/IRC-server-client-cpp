@@ -1,4 +1,1 @@
-Build an IRC-server-client with the use of the examples from Beej's networking guide(would highly recommend). Specifically used the polling sever from the book. Used pthreads for threading.
-
-TODO:
-Clean up code.
+Built an IRC-server-client with the use of the polling example from Beej's networking guide(would highly recommend reading through the the textbook). Used SFML,imgui,socket and pthreads.

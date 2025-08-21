@@ -7,21 +7,13 @@
 
 int server_running = 1;
 int msg_i{};
+int fd_start{};
 std::string display_messages = "Welcome! Be respectful.\n";
 std::string users_connected = "";
 
-/*
-    TODO:
-        somehow need to send user list to users
-    DONE:
-        pass display messages as a parameter or see if you can bullshit with the code(since display_messages is defined in the header)
-        horizontal scrolling
-        make it show the the box cant be moved around
-        Show users currently connected
-
-*/
 
 int main(){
     start();
+    std::cout << "Server successfully closed.\n";
     return 0;
 }

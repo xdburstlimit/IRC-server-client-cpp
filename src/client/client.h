@@ -17,6 +17,12 @@
 
 #include <vector>
 
+#include "imgui.h"
+#include "imgui-SFML.h"
+
+#include "SFML/Graphics.hpp"
+
+
 #define PORT "3490"
 
 int get_server_socket();
@@ -24,8 +30,6 @@ int get_server_socket();
 extern int server_running;
 
 extern int client_running;
-
-extern int msg_i;
 
 extern std::string display_messages;
 
@@ -36,6 +40,10 @@ void *get_in_addr(struct sockaddr *sa);
 void send_data(char msg[],int socket_fd);
 
 void* recv_data(void *info);
+
+void chat_window();
+
+void user_window();
 
 void start();
 

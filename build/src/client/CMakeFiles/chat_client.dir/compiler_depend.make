@@ -1237,6 +1237,87 @@ src/client/CMakeFiles/chat_client.dir/__/__/thirdparty/imgui/imgui_widgets.cpp.o
 
 src/client/CMakeFiles/chat_client.dir/client.cpp.o: /mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/src/client/client.cpp \
   /mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/src/client/client.h \
+  /mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/thirdparty/imgui/imconfig-SFML.h \
+  /mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/thirdparty/imgui/imconfig.h \
+  /mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/thirdparty/imgui/imgui-SFML.h \
+  /mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/thirdparty/imgui/imgui-SFML_export.h \
+  /mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/thirdparty/imgui/imgui.h \
+  /usr/include/SFML/Config.hpp \
+  /usr/include/SFML/Graphics.hpp \
+  /usr/include/SFML/Graphics/BlendMode.hpp \
+  /usr/include/SFML/Graphics/CircleShape.hpp \
+  /usr/include/SFML/Graphics/Color.hpp \
+  /usr/include/SFML/Graphics/ConvexShape.hpp \
+  /usr/include/SFML/Graphics/Drawable.hpp \
+  /usr/include/SFML/Graphics/Export.hpp \
+  /usr/include/SFML/Graphics/Font.hpp \
+  /usr/include/SFML/Graphics/Glsl.hpp \
+  /usr/include/SFML/Graphics/Glsl.inl \
+  /usr/include/SFML/Graphics/Glyph.hpp \
+  /usr/include/SFML/Graphics/Image.hpp \
+  /usr/include/SFML/Graphics/PrimitiveType.hpp \
+  /usr/include/SFML/Graphics/Rect.hpp \
+  /usr/include/SFML/Graphics/Rect.inl \
+  /usr/include/SFML/Graphics/RectangleShape.hpp \
+  /usr/include/SFML/Graphics/RenderStates.hpp \
+  /usr/include/SFML/Graphics/RenderTarget.hpp \
+  /usr/include/SFML/Graphics/RenderTexture.hpp \
+  /usr/include/SFML/Graphics/RenderWindow.hpp \
+  /usr/include/SFML/Graphics/Shader.hpp \
+  /usr/include/SFML/Graphics/Shape.hpp \
+  /usr/include/SFML/Graphics/Sprite.hpp \
+  /usr/include/SFML/Graphics/Text.hpp \
+  /usr/include/SFML/Graphics/Texture.hpp \
+  /usr/include/SFML/Graphics/Transform.hpp \
+  /usr/include/SFML/Graphics/Transformable.hpp \
+  /usr/include/SFML/Graphics/Vertex.hpp \
+  /usr/include/SFML/Graphics/VertexArray.hpp \
+  /usr/include/SFML/Graphics/VertexBuffer.hpp \
+  /usr/include/SFML/Graphics/View.hpp \
+  /usr/include/SFML/System.hpp \
+  /usr/include/SFML/System/Clock.hpp \
+  /usr/include/SFML/System/Err.hpp \
+  /usr/include/SFML/System/Export.hpp \
+  /usr/include/SFML/System/FileInputStream.hpp \
+  /usr/include/SFML/System/InputStream.hpp \
+  /usr/include/SFML/System/Lock.hpp \
+  /usr/include/SFML/System/MemoryInputStream.hpp \
+  /usr/include/SFML/System/Mutex.hpp \
+  /usr/include/SFML/System/NonCopyable.hpp \
+  /usr/include/SFML/System/Sleep.hpp \
+  /usr/include/SFML/System/String.hpp \
+  /usr/include/SFML/System/String.inl \
+  /usr/include/SFML/System/Thread.hpp \
+  /usr/include/SFML/System/Thread.inl \
+  /usr/include/SFML/System/ThreadLocal.hpp \
+  /usr/include/SFML/System/ThreadLocalPtr.hpp \
+  /usr/include/SFML/System/ThreadLocalPtr.inl \
+  /usr/include/SFML/System/Time.hpp \
+  /usr/include/SFML/System/Utf.hpp \
+  /usr/include/SFML/System/Utf.inl \
+  /usr/include/SFML/System/Vector2.hpp \
+  /usr/include/SFML/System/Vector2.inl \
+  /usr/include/SFML/System/Vector3.hpp \
+  /usr/include/SFML/System/Vector3.inl \
+  /usr/include/SFML/Window.hpp \
+  /usr/include/SFML/Window/Clipboard.hpp \
+  /usr/include/SFML/Window/Context.hpp \
+  /usr/include/SFML/Window/ContextSettings.hpp \
+  /usr/include/SFML/Window/Cursor.hpp \
+  /usr/include/SFML/Window/Event.hpp \
+  /usr/include/SFML/Window/Export.hpp \
+  /usr/include/SFML/Window/GlResource.hpp \
+  /usr/include/SFML/Window/Joystick.hpp \
+  /usr/include/SFML/Window/Keyboard.hpp \
+  /usr/include/SFML/Window/Mouse.hpp \
+  /usr/include/SFML/Window/Sensor.hpp \
+  /usr/include/SFML/Window/Touch.hpp \
+  /usr/include/SFML/Window/VideoMode.hpp \
+  /usr/include/SFML/Window/Vulkan.hpp \
+  /usr/include/SFML/Window/Window.hpp \
+  /usr/include/SFML/Window/WindowBase.hpp \
+  /usr/include/SFML/Window/WindowHandle.hpp \
+  /usr/include/SFML/Window/WindowStyle.hpp \
   /usr/include/alloca.h \
   /usr/include/arpa/inet.h \
   /usr/include/asm-generic/bitsperlong.h \
@@ -1245,8 +1326,11 @@ src/client/CMakeFiles/chat_client.dir/client.cpp.o: /mnt/8f40a6b9-a287-4d21-83ba
   /usr/include/asm-generic/posix_types.h \
   /usr/include/asm-generic/socket.h \
   /usr/include/asm-generic/sockios.h \
+  /usr/include/assert.h \
+  /usr/include/c++/13/algorithm \
   /usr/include/c++/13/backward/binders.h \
   /usr/include/c++/13/bit \
+  /usr/include/c++/13/bits/algorithmfwd.h \
   /usr/include/c++/13/bits/alloc_traits.h \
   /usr/include/c++/13/bits/allocator.h \
   /usr/include/c++/13/bits/basic_ios.h \
@@ -1255,10 +1339,12 @@ src/client/CMakeFiles/chat_client.dir/client.cpp.o: /mnt/8f40a6b9-a287-4d21-83ba
   /usr/include/c++/13/bits/basic_string.tcc \
   /usr/include/c++/13/bits/char_traits.h \
   /usr/include/c++/13/bits/charconv.h \
+  /usr/include/c++/13/bits/codecvt.h \
   /usr/include/c++/13/bits/concept_check.h \
   /usr/include/c++/13/bits/cpp_type_traits.h \
   /usr/include/c++/13/bits/cxxabi_forced.h \
   /usr/include/c++/13/bits/cxxabi_init_exception.h \
+  /usr/include/c++/13/bits/erase_if.h \
   /usr/include/c++/13/bits/exception.h \
   /usr/include/c++/13/bits/exception_defines.h \
   /usr/include/c++/13/bits/exception_ptr.h \
@@ -1270,14 +1356,18 @@ src/client/CMakeFiles/chat_client.dir/client.cpp.o: /mnt/8f40a6b9-a287-4d21-83ba
   /usr/include/c++/13/bits/istream.tcc \
   /usr/include/c++/13/bits/locale_classes.h \
   /usr/include/c++/13/bits/locale_classes.tcc \
+  /usr/include/c++/13/bits/locale_conv.h \
   /usr/include/c++/13/bits/locale_facets.h \
   /usr/include/c++/13/bits/locale_facets.tcc \
+  /usr/include/c++/13/bits/locale_facets_nonio.h \
+  /usr/include/c++/13/bits/locale_facets_nonio.tcc \
   /usr/include/c++/13/bits/localefwd.h \
   /usr/include/c++/13/bits/memory_resource.h \
   /usr/include/c++/13/bits/memoryfwd.h \
   /usr/include/c++/13/bits/move.h \
   /usr/include/c++/13/bits/nested_exception.h \
   /usr/include/c++/13/bits/new_allocator.h \
+  /usr/include/c++/13/bits/node_handle.h \
   /usr/include/c++/13/bits/ostream.tcc \
   /usr/include/c++/13/bits/ostream_insert.h \
   /usr/include/c++/13/bits/postypes.h \
@@ -1287,20 +1377,28 @@ src/client/CMakeFiles/chat_client.dir/client.cpp.o: /mnt/8f40a6b9-a287-4d21-83ba
   /usr/include/c++/13/bits/refwrap.h \
   /usr/include/c++/13/bits/requires_hosted.h \
   /usr/include/c++/13/bits/std_abs.h \
+  /usr/include/c++/13/bits/stl_algo.h \
   /usr/include/c++/13/bits/stl_algobase.h \
   /usr/include/c++/13/bits/stl_bvector.h \
   /usr/include/c++/13/bits/stl_construct.h \
   /usr/include/c++/13/bits/stl_function.h \
+  /usr/include/c++/13/bits/stl_heap.h \
   /usr/include/c++/13/bits/stl_iterator.h \
   /usr/include/c++/13/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/13/bits/stl_iterator_base_types.h \
+  /usr/include/c++/13/bits/stl_map.h \
+  /usr/include/c++/13/bits/stl_multimap.h \
   /usr/include/c++/13/bits/stl_pair.h \
+  /usr/include/c++/13/bits/stl_tempbuf.h \
+  /usr/include/c++/13/bits/stl_tree.h \
   /usr/include/c++/13/bits/stl_uninitialized.h \
   /usr/include/c++/13/bits/stl_vector.h \
+  /usr/include/c++/13/bits/stream_iterator.h \
   /usr/include/c++/13/bits/streambuf.tcc \
   /usr/include/c++/13/bits/streambuf_iterator.h \
   /usr/include/c++/13/bits/string_view.tcc \
   /usr/include/c++/13/bits/stringfwd.h \
+  /usr/include/c++/13/bits/uniform_int_dist.h \
   /usr/include/c++/13/bits/uses_allocator.h \
   /usr/include/c++/13/bits/uses_allocator_args.h \
   /usr/include/c++/13/bits/utility.h \
@@ -1311,11 +1409,13 @@ src/client/CMakeFiles/chat_client.dir/client.cpp.o: /mnt/8f40a6b9-a287-4d21-83ba
   /usr/include/c++/13/cstddef \
   /usr/include/c++/13/cstdio \
   /usr/include/c++/13/cstdlib \
+  /usr/include/c++/13/ctime \
   /usr/include/c++/13/cwchar \
   /usr/include/c++/13/cwctype \
   /usr/include/c++/13/debug/assertions.h \
   /usr/include/c++/13/debug/debug.h \
   /usr/include/c++/13/exception \
+  /usr/include/c++/13/ext/aligned_buffer.h \
   /usr/include/c++/13/ext/alloc_traits.h \
   /usr/include/c++/13/ext/atomicity.h \
   /usr/include/c++/13/ext/numeric_traits.h \
@@ -1326,8 +1426,13 @@ src/client/CMakeFiles/chat_client.dir/client.cpp.o: /mnt/8f40a6b9-a287-4d21-83ba
   /usr/include/c++/13/iosfwd \
   /usr/include/c++/13/iostream \
   /usr/include/c++/13/istream \
+  /usr/include/c++/13/iterator \
+  /usr/include/c++/13/locale \
+  /usr/include/c++/13/map \
   /usr/include/c++/13/new \
   /usr/include/c++/13/ostream \
+  /usr/include/c++/13/pstl/execution_defs.h \
+  /usr/include/c++/13/pstl/glue_algorithm_defs.h \
   /usr/include/c++/13/pstl/pstl_config.h \
   /usr/include/c++/13/stdexcept \
   /usr/include/c++/13/stdlib.h \
@@ -1344,6 +1449,7 @@ src/client/CMakeFiles/chat_client.dir/client.cpp.o: /mnt/8f40a6b9-a287-4d21-83ba
   /usr/include/errno.h \
   /usr/include/features-time64.h \
   /usr/include/features.h \
+  /usr/include/libintl.h \
   /usr/include/linux/close_range.h \
   /usr/include/linux/errno.h \
   /usr/include/linux/posix_types.h \
@@ -1459,7 +1565,9 @@ src/client/CMakeFiles/chat_client.dir/client.cpp.o: /mnt/8f40a6b9-a287-4d21-83ba
   /usr/include/x86_64-linux-gnu/c++/13/bits/error_constants.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/gthr-default.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/gthr.h \
+  /usr/include/x86_64-linux-gnu/c++/13/bits/messages_members.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
+  /usr/include/x86_64-linux-gnu/c++/13/bits/time_members.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/sys/cdefs.h \
@@ -1469,6 +1577,7 @@ src/client/CMakeFiles/chat_client.dir/client.cpp.o: /mnt/8f40a6b9-a287-4d21-83ba
   /usr/include/x86_64-linux-gnu/sys/single_threaded.h \
   /usr/include/x86_64-linux-gnu/sys/socket.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/float.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h
@@ -1821,30 +1930,6 @@ src/client/CMakeFiles/chat_client.dir/main.cpp.o: /mnt/8f40a6b9-a287-4d21-83ba-4
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h
 
 
-/usr/include/c++/13/ext/aligned_buffer.h:
-
-/usr/include/c++/13/bits/stl_map.h:
-
-/usr/include/c++/13/bits/erase_if.h:
-
-/usr/include/SFML/System/ThreadLocalPtr.inl:
-
-/usr/include/SFML/System/ThreadLocalPtr.hpp:
-
-/usr/include/SFML/System/Sleep.hpp:
-
-/usr/include/SFML/System/Mutex.hpp:
-
-/usr/include/SFML/System/Lock.hpp:
-
-/usr/include/SFML/Graphics/VertexBuffer.hpp:
-
-/usr/include/SFML/Graphics/Shape.hpp:
-
-/usr/include/SFML/Graphics/ConvexShape.hpp:
-
-/usr/include/SFML/Graphics/CircleShape.hpp:
-
 /mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/src/client/main.cpp:
 
 /usr/include/x86_64-linux-gnu/sys/poll.h:
@@ -1887,7 +1972,13 @@ src/client/CMakeFiles/chat_client.dir/main.cpp.o: /mnt/8f40a6b9-a287-4d21-83ba-4
 
 /usr/include/c++/13/ios:
 
+/usr/include/c++/13/ext/aligned_buffer.h:
+
+/usr/include/c++/13/bits/stl_map.h:
+
 /usr/include/c++/13/bits/ostream.tcc:
+
+/usr/include/c++/13/bits/erase_if.h:
 
 /usr/include/c++/13/bits/basic_ios.tcc:
 
@@ -1898,6 +1989,24 @@ src/client/CMakeFiles/chat_client.dir/main.cpp.o: /mnt/8f40a6b9-a287-4d21-83ba-4
 /usr/include/asm-generic/posix_types.h:
 
 /usr/include/arpa/inet.h:
+
+/usr/include/SFML/System/ThreadLocalPtr.inl:
+
+/usr/include/SFML/System/ThreadLocalPtr.hpp:
+
+/usr/include/SFML/System/Sleep.hpp:
+
+/usr/include/SFML/System/Mutex.hpp:
+
+/usr/include/SFML/System/Lock.hpp:
+
+/usr/include/SFML/Graphics/VertexBuffer.hpp:
+
+/usr/include/SFML/Graphics/Shape.hpp:
+
+/usr/include/SFML/Graphics/ConvexShape.hpp:
+
+/usr/include/SFML/Graphics/CircleShape.hpp:
 
 /mnt/8f40a6b9-a287-4d21-83ba-402bfa4a171b/C++/Network/Project/src/client/client.h:
 
@@ -2141,9 +2250,9 @@ src/client/CMakeFiles/chat_client.dir/main.cpp.o: /mnt/8f40a6b9-a287-4d21-83ba-4
 
 /usr/include/c++/13/system_error:
 
-/usr/include/SFML/Graphics/Text.hpp:
-
 /usr/include/linux/posix_types.h:
+
+/usr/include/SFML/Graphics/Text.hpp:
 
 /usr/include/c++/13/bits/ptr_traits.h:
 
@@ -2199,9 +2308,9 @@ src/client/CMakeFiles/chat_client.dir/main.cpp.o: /mnt/8f40a6b9-a287-4d21-83ba-4
 
 /usr/include/c++/13/bits/exception_ptr.h:
 
-/usr/include/SFML/Graphics.hpp:
-
 /usr/include/x86_64-linux-gnu/bits/socket_type.h:
+
+/usr/include/SFML/Graphics.hpp:
 
 /usr/include/c++/13/bits/localefwd.h:
 
