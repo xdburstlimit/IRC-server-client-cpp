@@ -53,11 +53,11 @@ void process_connections(int listener, int exitfd, int *fd_count, int *fd_size,
 		pollfd **pfds, char*** usernames, pthread_mutex_t* mutex, std::vector <std::string>* chat_history){ 
     for(int i = 0; i < *fd_count; i++) {
 		if ((*pfds)[i].revents & (POLLIN | POLLHUP)) {
-			if ((*pfds)[i].fd == listener) {
+			if ((*pfds)[i].fd == listener) {// if a new user connected
 				pthread_mutex_lock(mutex);
 				handle_new_connection(listener, fd_count, fd_size, pfds, usernames);
 				pthread_mutex_unlock(mutex);
-			} else {
+			} else {//actual data or if a user disconnected
 				pthread_mutex_lock(mutex);
 				handle_client_data(listener, exitfd,fd_count, pfds, usernames, &i, chat_history);
 				pthread_mutex_unlock(mutex);
@@ -109,7 +109,7 @@ void add_to_pfds(pollfd **pfds, char*** usernames,int newfd, int *fd_count,
     (*pfds)[*fd_count].revents = 0;
 
 	//username
-	char buf[250];
+	char buf[username_length];
 	memset(buf,0,sizeof(buf));
 	int nbytes = recv(newfd, buf, sizeof buf, 0);
 	if(nbytes <= 0){
@@ -133,7 +133,7 @@ void add_to_pfds(pollfd **pfds, char*** usernames,int newfd, int *fd_count,
 
 void handle_client_data(int listener, int exitfd, int *fd_count,
 		 pollfd **pfds, char*** usernames, int *pfd_i, std::vector <std::string>* chat_history){
-	char buf[256];	// Buffer for client data
+	char buf[message_length];	// Buffer for client data
 	memset(buf,0, sizeof(buf));
 	int nbytes = recv((*pfds)[*pfd_i].fd, buf, sizeof buf, 0);
 
@@ -155,7 +155,7 @@ void handle_client_data(int listener, int exitfd, int *fd_count,
 	} else {
 		printf("pollserver: recv from fd %d: %.*s \n", sender_fd,
 				nbytes, buf);
-		char combined[256];
+		char combined[total_length];
 		memset(combined, 0, sizeof(combined));
 		char semi_colon[3] = ": ";
 		strcat(combined,(*usernames)[*pfd_i]);
@@ -346,7 +346,7 @@ void start(){
             poller, &s_data);
 
 
-    char msg[256] = "";
+    char msg[message_length] = "";
 	int msg_size = IM_ARRAYSIZE(msg);
 
 	while(w_imgui.isOpen()){
@@ -361,6 +361,7 @@ void start(){
 				break;
 			}
 		}
+		//ImGui windows start here
 		ImGui::SFML::Update(w_imgui, deltaClock.restart());
         
         ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
@@ -378,7 +379,7 @@ void start(){
         ImGui::InputText("", msg, msg_size);
         ImGui::SameLine();
         if((ImGui::IsKeyPressed(ImGui::GetIO().KeyMap[ImGuiKey_Enter], false) &&ImGui::IsWindowFocused() || 
-            ImGui::Button("Send", ImVec2(150,0))) && (strlen(msg) > 0 && strlen(msg) < 255)){
+            ImGui::Button("Send", ImVec2(150,0))) && (strlen(msg) > 0 && strlen(msg) < message_length)){
             broadcast_to_clients(&b_clients, pfds,msg);
             memset(msg,0 ,msg_size);
             display_messages += (chat_history[msg_i] + '\n');
@@ -401,7 +402,9 @@ void start(){
 }
 
 void send_user_list(std::string display_users, pollfd** pfds, int fd_count){
-	char combined[256];
+	//should maybe send fd_count through first. so the client recv knows how much space is required
+	int user_list_size = fd_count * username_length;
+	char combined[user_list_size];
 	memset(combined,0,sizeof(combined));
 	strcat(combined,"/");
 	strcat(combined,display_users.c_str());
@@ -410,8 +413,7 @@ void send_user_list(std::string display_users, pollfd** pfds, int fd_count){
 		int dest_fd = (*pfds)[j].fd;
 		if (send(dest_fd, combined, n, 0) == -1) {
 			perror("send");
-		}
-		
+		}	
 	}
 }
 

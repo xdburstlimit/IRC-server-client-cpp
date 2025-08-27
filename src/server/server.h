@@ -57,6 +57,10 @@ extern std::string users_connected;
 
 extern int fd_start;
 
+const int username_length = 32;
+const int message_length = 256;
+const int total_length = username_length + message_length;
+
 
 int get_listener_socket();
 
@@ -83,8 +87,6 @@ void send_user_list(std::string display_users, pollfd** pfds, int fd_count);
 void chat_window();
 
 void user_window();
-
-void msg_window(char* msg, int msg_size, broadcast_data b_clients, std::vector<std::string> chat_history, pollfd* pfds);
 
 void start();
 

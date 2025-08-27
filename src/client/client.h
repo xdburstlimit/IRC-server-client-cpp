@@ -35,7 +35,10 @@ extern std::string display_messages;
 
 extern std::string users_connected;
 
-void *get_in_addr(struct sockaddr *sa);
+const int buf_size = 1024;
+const int username_length = 32;
+const int message_length = 256;
+const int total_length = username_length + message_length;
 
 void send_data(char msg[],int socket_fd);
 

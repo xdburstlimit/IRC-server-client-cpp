@@ -51,20 +51,12 @@ int get_server_socket(){
         fprintf(stderr,"client: failed to connect\n");
         exit(1);
     }
-    //inet_ntop(AF_INET, get_in_addr((struct sockaddr*) p->ai_addr), s, sizeof(s)); //address converts binary to number and dots notation(?)
+    
     return socket_fd;
 }
 
-void *get_in_addr(struct sockaddr *sa){
-    if (sa->sa_family == AF_INET) {
-        return &(((struct sockaddr_in*)sa)->sin_addr);
-    }
-
-    return &(((struct sockaddr_in6*)sa)->sin6_addr);
-}
 
 void send_data(char msg[],int socket_fd){
-    //send_args* my_args = (send_args*) args;
     int len{};
     len = strlen(msg);
     if(len <= 0){
@@ -85,7 +77,7 @@ void* recv_data(void *args){
         if(server_running == 0) break;
         for(int i{}; i < my_args->fd_count; ++i){
             if(my_args->pfds[i].revents & POLLIN){
-                char buf[256];
+                char buf[buf_size];
                 memset(buf, 0, sizeof(buf));
                 int byte_count = recv(my_args->socket_fd, buf, sizeof(buf), 0);
                 if(byte_count<=0){
@@ -114,7 +106,6 @@ void* recv_data(void *args){
 void start(){
     pthread_t* thread_handles;
     thread_handles = (pthread_t*)  malloc(sizeof(pthread_t));
-    send_args args_send_thread;
     recv_args args_recv_thread;
 
     //getting username from client
@@ -132,7 +123,7 @@ void start(){
     std::vector <std::string> chat_history;
 
     int len;
-    char username_i[50] = "";
+    char username_i[username_length] = "";
     while(username_window.isOpen()){
         sf::Event event;
         while(username_window.pollEvent(event)){
@@ -210,21 +201,16 @@ void start(){
         args_recv_thread.pfds[1].events = POLLIN;
 
         args_recv_thread.fd_count = 2;
-
-        //Filling in args_send_thread
-        args_send_thread.socket_fd = server_socket;
-        args_send_thread.exit_fd = exit_event;
         
         pthread_create(thread_handles, nullptr,
                 recv_data, (void*) &args_recv_thread);
-        char msg[256] = "";
+        char msg[message_length] = "";
         while(w_imgui.isOpen()){
             sf::Event event;
             while(w_imgui.pollEvent(event)){
                 ImGui::SFML::ProcessEvent(event);
                 if(event.type == sf::Event::Closed){
                     client_running = 0;
-                    server_running = 0;
                     u_int64_t val = 1;//eventfd can accept <=8bytes
                     if(write(exit_event, &val, sizeof(val))==-1) perror("write");
                     w_imgui.close();
@@ -232,6 +218,8 @@ void start(){
                 }
                 if(server_running == 0) break;  
             }
+
+            //ImGui windows start here
             ImGui::SFML::Update(w_imgui, deltaClock1.restart());
             
             ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
@@ -249,9 +237,9 @@ void start(){
             ImGui::InputText("", msg, IM_ARRAYSIZE(msg));
             ImGui::SameLine();
             if((ImGui::IsKeyPressed(ImGui::GetIO().KeyMap[ImGuiKey_Enter], false) &&ImGui::IsWindowFocused() || 
-                ImGui::Button("Send", ImVec2(150,0))) && strlen(msg) > 0 && strlen(msg) < 255){
+                ImGui::Button("Send", ImVec2(150,0))) && strlen(msg) > 0 && strlen(msg) < message_length && server_running != 0){
                 send_data(msg,server_socket);
-                char combined[288];
+                char combined[total_length];
                 memset(combined,0,IM_ARRAYSIZE(combined));
                 strcat(combined, username_i);
                 strcat(combined, ": ");
@@ -269,11 +257,7 @@ void start(){
             w_imgui.clear();
             ImGui::SFML::Render(w_imgui);
             w_imgui.display();
-        }
-
-
-            
-            
+        }    
         pthread_join(*thread_handles, nullptr);
         
     }
